@@ -1,0 +1,5 @@
+# WeakSet
+
+- [ ] add()
+- [ ] has()
+- [ ] delete()
