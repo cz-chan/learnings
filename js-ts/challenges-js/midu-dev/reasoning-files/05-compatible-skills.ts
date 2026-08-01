@@ -245,17 +245,66 @@ function candidatosCompatiblesFinalUpdates(
 	oferta: string[],
 	candidatos: Array<{ id: string; skills: string[] }>,
 ): string[] {
+	// abstraes la normalización en una única función que recibe un string y que la normaliza. con esto evitas DRY
 	const normalize = (s: string) => s.toLowerCase().trim();
+
+	/**
+	 * como me pide eliminar duplicados de ID, puedo hacerlo al final de haber hecho la comparación y
+	 * obtener los candidatos o puedo primero eliminar duplicados y después hacer todo el proceso.
+	 *
+	 * esta última opción es más rentable a nivel memoria ya que conlleva una transformación pero puede
+	 * eliminar tiempo de iteración en flujos posteriores
+	 *
+	 * transformas a un set e inmediatamente lo devuelvesa un array con el spread
+	 */
 	const skillsOferta = [...new Set(oferta.map(normalize))];
+
+	/**
+	 * el umbral debe ser un 70% del total de la oferta. Se pude hacer multiplicando con un 0.7
+	 * pero el problema es la coma flotante qeu te deja, mientras que si lo haces por dos partes,
+	 * x7 y después /10 esa coma flotante desaparece
+	 *
+	 * Se calcula sobre la oferta normalizada por su hubieran duplicados
+	 */
 	const minimo = Math.floor((skillsOferta.length * 7) / 10);
 
 	const compatibles = candidatos
+		/**
+		 * usamos .filter pq este devuelve un array (como .map) pero la diferencia es que este devuelve
+		 * el array con los elementos que hayan sido true en la condición que se le propone por defecto.
+		 *
+		 * un .map devuelve todos los elementos después de aplicarle la condición
+		 */
 		.filter(({ skills }) => {
+			/**
+			 * haces un set y dentro de este un map para que te devuelva un nuevo array con las skills
+			 * normalizadas y a estas les haces el set para eliminar los duplicados
+			 *
+			 * filtras dobles skills
+			 */
 			const propias = new Set(skills.map(normalize));
+
+			// Se itera la OFERTA: cada requisito se evalúa exactamente una vez, así
+			// el conteo no puede pasar de skillsOferta.length. .has() es igualdad
+			// estricta, sin el falso positivo de 'javascript'.includes('java').
+			/**
+			 * conviertes las skills en un set porque al hacer un .has tiene una complejidad de O(1) porque
+			 * no recorre todo el set en busca de ese elemento sino que a través del hash, va directamente
+			 * al elemento que esrá buscando, siempre es complejidad O(1) indistintamente de las skills y
+			 * tamaño. Mientras que el .includes de un array, necesita recorrer todo el array, uno por uno,
+			 * hasta hacer match con el elemento (no hace doble match pq se ha normalizado pero sin hacer Set
+			 * podrían haber dobles) y recorrer todo un array dando falsos positivos y una complejidad de 0(n)
+			 * siendo n el número de iteraciones por cada candidatura -> nº candidaturas * n veces (tamaño
+			 * array)
+			 */
 			return skillsOferta.filter((s) => propias.has(s)).length >= minimo;
 		})
+		// De los que pasan, con el .map devuelves solo el id.
 		.map(({ id }) => id);
 
+	// Set → "no repitas candidatos" (dos objetos con id 'ana' dan un solo id).
+	// localeCompare → orden alfabético real; .sort() pelado ordena por UTF-16
+	// (mayúsculas antes que minúsculas, acentos al final).
 	return [...new Set(compatibles)].sort((a, b) => a.localeCompare(b));
 }
 
@@ -418,10 +467,52 @@ console.log("final", candidatosCompatiblesFinalUpdates(oferta2, candidatos));
  * pasaba a `llum`.
  *
  * POR QUÉ .has() Y NO .includes():
- * dos motivos.
- *   a) rendimiento: `has` es O(1), ya explicado arriba.
- *   b) `includes` sobre un STRING busca subcadena, y ese fue el bug de
- *      "java" vs "javascript":
+ * dos motivos independientes — uno de rendimiento y otro de corrección.
+ *
+ *   a) RENDIMIENTO: O(1) vs O(n)
+ *
+ *      La diferencia no está en los métodos, está en cómo guardan los datos
+ *      por dentro.
+ *
+ *      Un ARRAY son cajas numeradas en fila. No sabe qué contiene. Para
+ *      responder "¿está 'react' aquí?" no le queda otra que mirar caja por
+ *      caja hasta encontrarlo o llegar al final:
+ *
+ *          const arr = ['js', 'css', 'node', 'git', 'react']
+ *          arr.includes('react')
+ *          // ¿'js'? no. ¿'css'? no. ¿'node'? no. ¿'git'? no. ¿'react'? sí.
+ *          // 5 comparaciones
+ *
+ *      Si el array tuviera 1000 elementos y el buscado estuviera al final,
+ *      serían 1000 comparaciones. El coste crece con el tamaño → O(n).
+ *
+ *      Un SET es una tabla hash. Al insertar, aplica una función hash que
+ *      convierte el string en un número, y ese número dice EN QUÉ HUECO
+ *      guardarlo:
+ *
+ *          hash('react') → 8823  → hueco 8823
+ *          hash('js')    → 141   → hueco 141
+ *
+ *      Para responder "¿está 'react'?" no busca: recalcula hash('react'), va
+ *      directo al hueco 8823 y mira si hay algo. UNA operación, tenga el Set
+ *      5 elementos o 5 millones. Coste constante → O(1).
+ *
+ *      La analogía: buscar un nombre leyendo una lista de papel de arriba
+ *      abajo (array) vs. abrir la agenda directamente por la letra R (Set).
+ *
+ *      POR QUÉ IMPORTA AQUÍ: dentro del filter hago una consulta por cada
+ *      skill de la oferta, y eso se repite por cada candidato. Con arrays son
+ *      m*k comparaciones (m skills de oferta × k del candidato) — exactamente
+ *      mi doble bucle original. Con Set: k inserciones para construirlo + m
+ *      consultas de coste 1. O(m*k) → O(m+k).
+ *
+ *      EL MATIZ HONESTO: el Set no es gratis, construirlo cuesta recorrer las
+ *      k skills una vez. Si solo fuera a hacer UNA consulta, el array sería
+ *      igual de bueno o mejor. El Set gana cuando consultas muchas veces sobre
+ *      la misma colección — que es justo este caso.
+ *
+ *   b) CORRECCIÓN: `includes` sobre un STRING busca subcadena, y ese fue el
+ *      bug de "java" vs "javascript":
  *          'javascript'.includes('java')   // true  ← falso positivo
  *          ['javascript'].includes('java') // false ← comparación por ===
  *      El mismo nombre de método significa cosas distintas según el receptor.
