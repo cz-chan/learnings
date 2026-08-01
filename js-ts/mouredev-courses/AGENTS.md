@@ -1,73 +1,46 @@
-# CLAUDE.md
+# AGENTS.md — mouredev-courses/
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+Instrucciones para cualquier agente de IA que trabaje en esta carpeta. Mismo contenido que `CLAUDE.md`. Hereda las reglas de la raíz.
 
-## Project Overview
+## Qué es esta carpeta
 
-This is a **self-directed JavaScript learning repository**. The user is progressively learning JavaScript from basics through intermediate topics. No build system, no dependencies, no tests — pure Node.js scripts.
-
-## Educational Approach — CRITICAL
-
-**NEVER provide direct solutions to exercises.** The user learns by solving problems themselves.
-
-When helping with tasks (`*-tasks.js` files):
-
-- Give hints, clues, and guided questions
-- Help reason through the problem
-- Point to relevant concepts or sections to review
-- Explain JavaScript concepts as needed
-- Redirect attempts with questions that lead to self-discovery
-
-## Repository Structure
+Curso de JavaScript de **MoureDev**, seguido de forma autodidacta. El usuario escribe las lecciones a mano mientras avanza y luego resuelve los ejercicios del tema. No es código de producción.
 
 ```
-basic/           → Fundamentals (00-16 lessons, ES modules)
-  ├─ 00-helloworld.js through 16-modules-import.js
-  ├─ tasks/      → Exercises per lesson (early ones are .md, later ones are .js)
-  └─ package.json → "type": "module" (ES6 import/export)
-
-intermediate/    → Advanced topics (01-05+, no package.json → CommonJS-eligible)
-  ├─ 01-advanced-funct.js, 01-tasks.js
-  ├─ 02-adv-structures.js, 02-tasks.js
-  ├─ 03-adv-classes.js, 03-adv-objects.js, 03-tasks.js
-  ├─ 04-async.js, 04-tasks.js
-  ├─ 05-apis.js, 05-tasks.js   (currently empty, WIP)
-  └─ future lessons numbered sequentially
-
-assets.md        → Reference links to learning resources
-AGENTS.md        → Educational guidelines (defines this approach)
+basic/                 → Fundamentos 00-16 (ver su CLAUDE.md)
+  └─ tasks/            → Ejercicios de cada lección básica
+intermediate/          → Temas avanzados 01-09 (ver su CLAUDE.md)
+  ├─ NN-tema.js        → Lección
+  ├─ NN-tasks.js       → Ejercicios de esa lección
+  └─ pngs/             → Imágenes usadas por las lecciones de DOM
+assets.md              → Enlaces a recursos de aprendizaje
 ```
 
-Lesson files are standalone scripts, not imported by each other — `require`/`module.exports` isn't actually used across `intermediate/` files in practice, even though the module system permits it. Lesson comments and variable names are frequently written in Spanish.
+## Lección vs. ejercicio — distinguir SIEMPRE
 
-## Running Scripts
+- **Lecciones** (`NN-tema.js`, `_docs.md`, `assets.md`): material de referencia. Puedes explicar, ampliar, corregir errores conceptuales y añadir ejemplos con libertad.
+- **Ejercicios** (`*-tasks.js`, `basic/tasks/*`): aquí manda la regla socrática. Pistas y preguntas guía, nunca la solución — salvo "me rindo".
 
-All scripts run directly via Node.js:
+Antes de responder, mira en qué archivo está trabajando el usuario.
+
+## Ejecutar
+
+Monorepo pnpm (`pnpm-workspace.yaml`) con `basic/` e `intermediate/` como paquetes. **Todo es ESM**: los tres `package.json` declaran `"type": "module"` (la excepción es `basic/16-modules-import-external.cjs`, que es CommonJS a propósito, para la lección de módulos).
 
 ```bash
-# Run a lesson file
-node basic/00-helloworld.js
-node intermediate/01-advanced-funct.js
-
-# Run a task file (exercises to solve)
-node basic/tasks/02-datatypes.js
-node intermediate/02-tasks.js
+node basic/06-array.js            # ejecutar una lección
+node intermediate/02-tasks.js     # ejecutar unos ejercicios
+pnpm test                         # jest — solo intermediate/09-test.test.js
 ```
 
-**Module System:**
+Las lecciones son scripts sueltos: no se importan entre sí (salvo los `16-modules-*` de `basic/`, que existen justo para demostrar import/export).
 
-- `basic/` uses **ES modules** (`import`/`export`) — enabled by `package.json` `"type": "module"`
-- `intermediate/` uses **CommonJS** (`require`/`module.exports`) — files ending in `.cjs` or standard `.js`
+## Convenciones
 
-## Lesson Topics Covered
+- Comentarios y nombres de variables en **español**.
+- Numeración `NN-` = orden del curso. Un tema nuevo va con el siguiente número.
+- Es normal que un `.js` sea un guion de apuntes con `console.log` en lugar de un programa: no lo "refactorices a producción".
 
-**Basic (00-16):**
-Variables, data types, operators, strings, conditionals, arrays, Sets, Maps, loops, functions, objects, destructuring/spreading, classes, error handling, console methods, modules (import/export)
+## Estado
 
-**Intermediate (01+):**
-Advanced functions, complex data structures (more Sets/Maps usage), and beyond
-
-## Next Steps
-
-- `intermediate/05-apis.js` and `05-tasks.js` are new, empty files — lesson content and exercises not yet written
-- Future intermediate lessons expected to follow this pattern
+- `intermediate/` llega hasta `09-test` (Jest). Los temas siguientes seguirán el mismo patrón `NN-tema.js` + `NN-tasks.js`.

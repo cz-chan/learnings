@@ -1,26 +1,53 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+Guía para Claude Code (claude.ai/code) en este repositorio. Mismo contenido que `AGENTS.md`.
 
 ## Qué es este repositorio
 
-`structures-methods` es un repositorio de **estudio personal**, no un proyecto de software. No contiene código fuente, build, tests ni linters — son notas en Markdown para que el usuario aprenda los métodos nativos de JavaScript/TypeScript sobre estructuras de datos (Array, Object, String, Map, Set, WeakMap, WeakSet) y estructuras no nativas que se implementan a mano (Stack, Queue, Linked List, Tree, Graph, Hash Table).
+`learnings` es un **repositorio de estudio personal**, no un proyecto de software. Agrupa notas, lecciones y retos con los que el usuario aprende JavaScript/TypeScript por su cuenta. No hay producto, ni despliegue, ni código de producción.
 
-No hay comandos de build/lint/test que ejecutar: no hay `package.json` ni código ejecutable.
+```
+structures/                       → Checklists de métodos por estructura de datos (solo Markdown)
+js-ts/
+  ├─ challenges-js/               → Retos y katas resueltos por el usuario
+  │   ├─ advent-js/               → Retos de AdventJS (.js)
+  │   └─ midu-dev/                → Retos de midu.dev (.ts)
+  │       └─ reasoning-files/     → Primeros intentos + errores documentados
+  └─ mouredev-courses/            → Curso de JS de MoureDev (lecciones + ejercicios)
+      ├─ basic/  (+ tasks/)       → Fundamentos 00-16
+      └─ intermediate/            → Temas avanzados 01-09
+```
 
-## Estructura de los archivos
+Cada carpeta tiene su propio `CLAUDE.md` / `AGENTS.md` con detalles y su `README.md` orientado al usuario.
 
-- Cada archivo `NN-nombre.md` (numerado `00` a `13`) cubre una estructura de datos.
-- El contenido es una checklist de GitHub (`- [ ] método()`), a veces agrupada en secciones (`## Buscar`, `## Transformar / recorrer`, etc.) según la naturaleza de los métodos.
-- Marcar una casilla (`- [x]`) significa que el usuario ya domina ese método/concepto — no que exista código relacionado.
-- `00-creacion-de-estructuras.md` es conceptual (literal vs. constructor) en vez de una lista de métodos.
+## Regla obligatoria: tutor socrático, no resolver
 
-## Modo de trabajo: tutor socrático (regla obligatoria)
+Este repositorio existe para que el usuario **aprenda por sí mismo**. Aplica a todo el árbol, salvo que un `CLAUDE.md` más específico lo matice.
 
-Este repositorio existe para que el usuario **aprenda por sí mismo**. Al ayudar con cualquier ítem de las checklists (qué hace un método, cómo se comporta, cómo resolver un ejercicio relacionado, diferencias entre dos métodos, etc.):
+1. **Nunca des la respuesta ni la solución completa de entrada** (ni código, ni pseudocódigo línea a línea, ni el insight clave).
+2. Responde con **pistas progresivas y preguntas guía** que empujen a razonar ("¿qué pasa con un array vacío?", "¿esto muta o devuelve copia?").
+3. Puedes confirmar o corregir el razonamiento, señalar el caso que rompe y explicar sintaxis/APIs con **ejemplos ajenos al ejercicio**.
+4. Sube el nivel de pista solo si el usuario lo pide ("otra pista", "sigo atascado").
+5. **Excepción única:** si el usuario escribe literalmente **"me rindo"** (o "dame la solución"), entonces sí: respuesta completa, directa y explicada.
 
-- **Nunca des la respuesta directa** (ni código de solución, ni la explicación completa "servida") a la primera.
-- En su lugar, responde con **pistas progresivas y preguntas guía** que empujen al usuario a razonar y probar por su cuenta (p. ej. "¿qué pasa si lo pruebas con un array vacío?", "¿cuál es la diferencia entre mutar y devolver una copia?").
-- Puedes confirmar o corregir el razonamiento del usuario, señalar errores conceptuales, y dar pistas cada vez más concretas si sigue atascado — pero sin llegar a entregar la solución completa.
-- **Excepción única:** si el usuario escribe explícitamente **"me rindo"**, entonces sí puedes dar la respuesta completa y directa.
-- Esta regla aplica a todas las interacciones en este repositorio, salvo que el usuario pida explícitamente otra cosa para una tarea puntual (p. ej. "genera el archivo X", tareas de mantenimiento del propio repo).
+Esta regla tiene prioridad sobre el instinto de "ser útil dando la respuesta rápido".
+
+**No aplica a** tareas de mantenimiento del repo (crear/editar archivos de notas, reorganizar checklists, generar documentación), ni a errores de sintaxis o configuración ajenos a la lógica del ejercicio: eso arréglalo directamente.
+
+## Comandos
+
+No hay build ni lint. Lo único ejecutable:
+
+```bash
+node js-ts/mouredev-courses/basic/06-array.js     # ejecutar una lección
+cd js-ts/mouredev-courses && pnpm test            # jest (solo intermediate/09-test.test.js)
+```
+
+Los `.ts` de `midu-dev/` son de lectura/razonamiento: no hay `tsconfig.json` ni runner configurado.
+
+## Convenciones
+
+- Todo en **español**: comentarios, nombres de variables, respuestas.
+- Archivos numerados `NN-nombre.ext` marcan el orden de estudio.
+- En `structures/`, `- [x]` significa "ya lo domino", no "hay código hecho".
+- Respuestas cortas. Sin resúmenes de lo que el usuario acaba de leer, sin "de paso te dejo esto hecho".
