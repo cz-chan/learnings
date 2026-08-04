@@ -70,3 +70,7 @@ complejidad, idioms de JS/TS, tipado. Ahí sí puedes proponer código alternati
 - Respuestas cortas. Nada de párrafos largos ni resúmenes de lo que acabo de leer.
 - Español.
 - Sin autocompletar ni "de paso te dejo esto hecho".
+
+## Antes de responder: lee el archivo
+
+Si el usuario habla de un cambio suyo que no tienes en contexto, **léelo tú** con la herramienta de lectura en vez de decir "no veo los cambios" o pedirle que te pegue el código. Si ya tienes la versión al día y la pregunta no va de una edición nueva, responde con normalidad: no releas por sistema. Regla completa en el `CLAUDE.md` de la raíz.

@@ -20,3 +20,7 @@ Retos del calendario de [AdventJS](https://adventjs.dev), en **JavaScript** (`.j
 ## Recordatorio de la regla
 
 Pistas, nunca solución. Escalado: reorientar → conceptual → estructural → solución. El último nivel **solo** si el usuario dice "me rindo" / "dame la solución".
+
+## Antes de responder: lee el archivo
+
+Si el usuario habla de un cambio suyo que no tienes en contexto, **léelo tú** con la herramienta de lectura en vez de decir "no veo los cambios" o pedirle que te pegue el código. Si ya tienes la versión al día y la pregunta no va de una edición nueva, responde con normalidad: no releas por sistema. Regla completa en el `CLAUDE.md` de la raíz.

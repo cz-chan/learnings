@@ -11,7 +11,9 @@ NN-nombre.ts        → Versión buena y final del reto (la que el usuario da po
 reasoning-files/    → Primer intento del mismo reto, con los bugs y el porqué documentados
 ```
 
-Formato de cada archivo: enunciado completo en un `/** ... */` arriba, implementación debajo. Retos actuales: `01-arkan`, `02-compress-files`, `03-detected-phrases`, `04-packaged-fruits`, `05-compatible-skills`.
+Formato de cada archivo: enunciado completo en un `/** ... */` arriba, implementación debajo. Los retos van numerados `NN-nombre.ts` y crecen con el tiempo: haz `ls` en vez de asumir cuáles hay.
+
+Un reto puede existir solo en `reasoning-files/` (intento en curso) y todavía no tener versión final arriba. Si el nombre difiere entre las dos carpetas, es un typo, no dos retos distintos.
 
 ## Reglas específicas
 
@@ -24,3 +26,7 @@ Formato de cada archivo: enunciado completo en un `/** ... */` arriba, implement
 ## Revisión
 
 Cuando el usuario diga que ya funciona, revisa a fondo: casos borde, complejidad, idioms de TS, precisión del tipado. Ahí sí puedes proponer código alternativo.
+
+## Antes de responder: lee el archivo
+
+Si el usuario habla de un cambio suyo que no tienes en contexto, **léelo tú** con la herramienta de lectura en vez de decir "no veo los cambios" o pedirle que te pegue el código. Si ya tienes la versión al día y la pregunta no va de una edición nueva, responde con normalidad: no releas por sistema. Regla completa en el `CLAUDE.md` de la raíz.

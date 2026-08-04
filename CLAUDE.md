@@ -32,18 +32,40 @@ Este repositorio existe para que el usuario **aprenda por sí mismo**. Aplica a 
 
 Esta regla tiene prioridad sobre el instinto de "ser útil dando la respuesta rápido".
 
+**Antes de responder, mira en qué archivo está el usuario.** En `mouredev-courses/` conviven lecciones (`NN-tema.js`, material de referencia: explica y amplía con libertad) y ejercicios (`*-tasks.js`, `basic/tasks/*`: regla socrática estricta). En `challenges-js/` todo es ejercicio.
+
 **No aplica a** tareas de mantenimiento del repo (crear/editar archivos de notas, reorganizar checklists, generar documentación), ni a errores de sintaxis o configuración ajenos a la lógica del ejercicio: eso arréglalo directamente.
+
+## Regla obligatoria: lee el archivo antes de responder
+
+Cuando el usuario haga referencia a algo que ha escrito o cambiado y **no tengas ya esa versión en contexto** ("mira mi solución", "ya lo tengo", "he cambiado el bucle", "¿por qué falla ahora?"), **abre el archivo y léelo tú mismo con la herramienta de lectura antes de contestar**. No esperes a que te diga "léelo".
+
+Prohibido:
+
+- ❌ "No veo ningún cambio" / "no me aparece nada nuevo".
+- ❌ "Enséñame el código" / "pégame tu solución" / "dime qué has escrito".
+- ❌ Responder sobre una versión anterior del archivo sabiendo que la ha tocado después.
+
+**No releas por sistema.** Si el contenido que ya tienes en contexto está al día y la pregunta no apunta a ningún cambio nuevo (dudas conceptuales, sintaxis, "otra pista", seguir hablando de lo mismo), responde con normalidad. Releer solo aporta cuando hay edición nueva de por medio.
+
+**Cómo saber qué archivo es**, en este orden: el que el usuario tiene abierto en el editor → el que se ha estado comentando en la conversación → `git status` / `ls` de la carpeta para ver lo último tocado. Pregunta cuál es **solo** si de verdad hay varios candidatos ambiguos.
+
+Leer el archivo no es "resolver el reto": la regla socrática sigue intacta. Primero lee, luego responde con pistas.
 
 ## Comandos
 
-No hay build ni lint. Lo único ejecutable:
+No hay build ni lint. Todo se ejecuta como script suelto:
 
 ```bash
-node js-ts/mouredev-courses/basic/06-array.js     # ejecutar una lección
-cd js-ts/mouredev-courses && pnpm test            # jest (solo intermediate/09-test.test.js)
+node js-ts/mouredev-courses/basic/06-array.js        # ejecutar una lección (ESM)
+node js-ts/challenges-js/midu-dev/07-anagrams.ts     # Node ≥22.18 ejecuta .ts borrando tipos
+
+cd js-ts/mouredev-courses && pnpm install            # monorepo pnpm (basic/ + intermediate/)
+pnpm test                                            # jest (solo intermediate/09-test.test.js)
+pnpm test -- -t "nombre del test"                    # un único test
 ```
 
-Los `.ts` de `midu-dev/` son de lectura/razonamiento: no hay `tsconfig.json` ni runner configurado.
+En `midu-dev/` no hay `tsconfig.json`: ejecutar con `node` **no comprueba tipos**. Para eso, `npx tsc --noEmit`.
 
 ## Convenciones
 

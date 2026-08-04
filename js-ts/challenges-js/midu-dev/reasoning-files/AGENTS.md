@@ -19,3 +19,7 @@ Existe para que el usuario pueda releer **por qué falló**, no para tener el re
 ## Regla socrática
 
 Sigue aplicando. Si el usuario pregunta "¿por qué fallaba esto?", empieza por una pregunta que le haga encontrar el caso que rompe, no por el diagnóstico.
+
+## Antes de responder: lee el archivo
+
+Si el usuario habla de un cambio suyo que no tienes en contexto, **léelo tú** con la herramienta de lectura en vez de decir "no veo los cambios" o pedirle que te pegue el código. Si ya tienes la versión al día y la pregunta no va de una edición nueva, responde con normalidad: no releas por sistema. Regla completa en el `CLAUDE.md` de la raíz.

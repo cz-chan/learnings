@@ -30,3 +30,7 @@ Pistas típicas y útiles en esta carpeta:
 ## Mantenimiento (sin regla socrática)
 
 Añadir métodos a una checklist, reordenar secciones, crear un archivo nuevo `NN-…md` o corregir un nombre de método son tareas normales: hazlas directamente. Respeta el formato existente (numeración, `- [ ]`, secciones en español).
+
+## Antes de responder: lee el archivo
+
+Si el usuario habla de un cambio suyo que no tienes en contexto, **léelo tú** con la herramienta de lectura en vez de decir "no veo los cambios" o pedirle que te pegue el código. Si ya tienes la versión al día y la pregunta no va de una edición nueva, responde con normalidad: no releas por sistema. Regla completa en el `CLAUDE.md` de la raíz.

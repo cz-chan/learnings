@@ -44,3 +44,7 @@ Las lecciones son scripts sueltos: no se importan entre sí (salvo los `16-modul
 ## Estado
 
 - `intermediate/` llega hasta `09-test` (Jest). Los temas siguientes seguirán el mismo patrón `NN-tema.js` + `NN-tasks.js`.
+
+## Antes de responder: lee el archivo
+
+Si el usuario habla de un cambio suyo que no tienes en contexto, **léelo tú** con la herramienta de lectura en vez de decir "no veo los cambios" o pedirle que te pegue el código. Si ya tienes la versión al día y la pregunta no va de una edición nueva, responde con normalidad: no releas por sistema. Regla completa en el `CLAUDE.md` de la raíz.
