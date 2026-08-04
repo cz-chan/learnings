@@ -28,3 +28,7 @@ Mismo nombre que el reto correspondiente en la carpeta padre:
 ## Cómo lo uso
 
 Antes de atacar un reto nuevo, releo un par de estos y me pregunto si estoy a punto de repetir el mismo fallo.
+
+## tipo de retos
+
+Del 01 al 10 son `fáciles`, del 11 al 20 `medios` y del 21 al 30 `difíciles`.
