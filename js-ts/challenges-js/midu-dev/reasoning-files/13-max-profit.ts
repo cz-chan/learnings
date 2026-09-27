@@ -187,4 +187,3 @@ function maxStockProfitUpdated1(dailyPrices: number[]): number {
 }
 
 console.log("updated 1", maxStockProfitUpdated1(dailyPrices)); // => 16
-//claude --resume bade6ac1-dcec-414d-9993-c8288cda54fd
